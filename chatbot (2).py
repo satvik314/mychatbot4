@@ -1,15 +1,17 @@
 import streamlit as st
 from streamlit_chat import message
 # from langchain.chat_models import ChatOpenAI
-from langchain_openai import ChatOpenAI
+# from langchain_openai import ChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_anthropic import ChatAnthropic
+# from langchain_anthropic import ChatAnthropic
 from langchain.chains import ConversationChain
 from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 
 import os
 
-os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+# os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
+
 
 # Initialize session state variables
 if 'buffer_memory' not in st.session_state:
@@ -21,8 +23,8 @@ if "messages" not in st.session_state.keys(): # Initialize the chat message hist
     ]
 
 # Initialize ChatOpenAI and ConversationChain
-llm = ChatOpenAI(model_name="gpt-3.5-turbo-0125")
-# llm = ChatGoogleGenerativeAI(model = "gemini-pro")
+# llm = ChatOpenAI(model_name="gpt-3.5-turbo-0125")
+llm = ChatGoogleGenerativeAI(model = "gemini-pro")
 # llm = ChatAnthropic(model_name="claude-3-sonnet-20240229")
 
 conversation = ConversationChain(memory=st.session_state.buffer_memory, llm=llm)
