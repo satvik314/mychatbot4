@@ -20,21 +20,17 @@ if 'buffer_memory' not in st.session_state:
 
 if "messages" not in st.session_state.keys(): # Initialize the chat message history
     st.session_state.messages = [
-        {"role": "assistant", "content": "How can I help you today?"}
+        {"role": "assistant", "content": "Main hun aapki Zoya, poochiye mujhe kuch bhi!"}
     ]
 
 # Initialize ChatOpenAI and ConversationChain
-# llm = ChatOpenAI(model_name="gpt-3.5-turbo-0125")
-# llm = ChatGoogleGenerativeAI(model = "gemini-pro")
-# llm = ChatAnthropic(model_name="claude-3-sonnet-20240229")
-
 llm = ChatGoogleGenerativeAI(model = "gemini-1.5-flash")
 
 conversation = ConversationChain(memory=st.session_state.buffer_memory, llm=llm)
 
 # Create user interface
 st.title("हिन्glish bot ")
-# st.subheader("your friendly")
+st.markdown("### Built by [Build Fast with AI](https://www.buildfastwithai.com)")
 
 
 if prompt := st.chat_input("Your question"): # Prompt for user input and save to chat history
