@@ -3,6 +3,7 @@ from streamlit_chat import message
 # from langchain.chat_models import ChatOpenAI
 # from langchain_openai import ChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_core.messages import HumanMessage, SystemMessage
 # from langchain_anthropic import ChatAnthropic
 from langchain.chains import ConversationChain
 from langchain.chains.conversation.memory import ConversationBufferWindowMemory
@@ -24,14 +25,16 @@ if "messages" not in st.session_state.keys(): # Initialize the chat message hist
 
 # Initialize ChatOpenAI and ConversationChain
 # llm = ChatOpenAI(model_name="gpt-3.5-turbo-0125")
-llm = ChatGoogleGenerativeAI(model = "gemini-pro")
+# llm = ChatGoogleGenerativeAI(model = "gemini-pro")
 # llm = ChatAnthropic(model_name="claude-3-sonnet-20240229")
+
+llm = ChatGoogleGenerativeAI(model = "gemini-1.5-flash")
 
 conversation = ConversationChain(memory=st.session_state.buffer_memory, llm=llm)
 
 # Create user interface
-st.title("🗣️ Conversational Chatbot - Cohort IV")
-st.subheader("㈻ Chatbot built with Langchain and Streamlit")
+st.title("हिन्glish bot ")
+# st.subheader("your friendly")
 
 
 if prompt := st.chat_input("Your question"): # Prompt for user input and save to chat history
@@ -41,11 +44,15 @@ for message in st.session_state.messages: # Display the prior chat messages
     with st.chat_message(message["role"]):
         st.write(message["content"])
 
+system_message = "Please respond in Hinglish (Hindi + English) along with emojis. Keep your responses short and witty."
+
 # If last message is not from assistant, generate a new response
 if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
-            response = conversation.predict(input = prompt)
+            messages = [SystemMessage(content=system_message),
+                        HumanMessage(content=prompt)]
+            response = conversation.run(messages)
             st.write(response)
             message = {"role": "assistant", "content": response}
             st.session_state.messages.append(message) # Add response to message history
