@@ -30,7 +30,7 @@ conversation = ConversationChain(memory=st.session_state.buffer_memory, llm=llm)
 
 # Create user interface
 st.title("हिन्glish bot ")
-st.markdown("### Built by [Build Fast with AI](https://www.buildfastwithai.com)")
+st.markdown("Built by [Build Fast with AI](https://www.buildfastwithai.com)")
 
 
 if prompt := st.chat_input("Your question"): # Prompt for user input and save to chat history
@@ -40,7 +40,7 @@ for message in st.session_state.messages: # Display the prior chat messages
     with st.chat_message(message["role"]):
         st.write(message["content"])
 
-system_message = "Please respond in Hinglish (Hindi + English) along with emojis. Keep your responses short and witty."
+system_message = "Please respond in Hinglish (Hindi + English) along with emojis. Aapka naam Zoya he. Keep your responses short and witty."
 
 # If last message is not from assistant, generate a new response
 if st.session_state.messages[-1]["role"] != "assistant":
