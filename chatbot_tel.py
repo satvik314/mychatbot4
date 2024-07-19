@@ -10,8 +10,8 @@ from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 
 import os
 
-# os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
-os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
+os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+# os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
 
 
 # Initialize session state variables
@@ -24,7 +24,8 @@ if "messages" not in st.session_state.keys(): # Initialize the chat message hist
     ]
 
 # Initialize ChatOpenAI and ConversationChain
-llm = ChatGoogleGenerativeAI(model = "gemini-1.5-flash")
+# llm = ChatGoogleGenerativeAI(model = "gemini-1.5-flash")
+llm = ChatOpenAI(model = "gpt-4o-mini")
 
 conversation = ConversationChain(memory=st.session_state.buffer_memory, llm=llm)
 
